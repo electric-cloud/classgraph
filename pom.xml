@@ -3,7 +3,7 @@
 
     <groupId>io.github.classgraph</groupId>
     <artifactId>classgraph</artifactId>
-    <version>4.8.24</version>
+    <version>4.8.24-PATCH1</version>
     <name>ClassGraph</name>
 
     <description>The uber-fast, ultra-lightweight classpath and module scanner for JVM languages.</description>
@@ -78,10 +78,13 @@
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
             </plugin>
+<!--
+Disabled because our old version of jetty can't scan the META-INF/versions/9/module-info.class file
             <plugin>
                 <groupId>org.moditect</groupId>
                 <artifactId>moditect-maven-plugin</artifactId>
             </plugin>
+-->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
@@ -212,9 +215,11 @@
                 </plugin>
 
                 <!-- Compile module-info.class using ModiTect, and place it in META-INF/versions/9 -->
+<!--
+Disabled because old version of jetty can't scan the META-INF/versions/9/module-info.class file
                 <plugin>
-                    <!-- In the future, rather than using ModiTect, could use two execute rules. -->
-                    <!-- See: https://maven.apache.org/plugins/maven-compiler-plugin/examples/module-info.html -->
+                    &lt;!&ndash; In the future, rather than using ModiTect, could use two execute rules. &ndash;&gt;
+                    &lt;!&ndash; See: https://maven.apache.org/plugins/maven-compiler-plugin/examples/module-info.html &ndash;&gt;
                     <groupId>org.moditect</groupId>
                     <artifactId>moditect-maven-plugin</artifactId>
                     <version>1.0.0.Beta2</version>
@@ -226,15 +231,15 @@
                                 <goal>add-module-info</goal>
                             </goals>
                             <configuration>
-                                <!-- Put module-info.class in META-INF/versions/9 to maximize backwards compat -->
-                                <!-- See: https://github.com/moditect/moditect/issues/67 -->
+                                &lt;!&ndash; Put module-info.class in META-INF/versions/9 to maximize backwards compat &ndash;&gt;
+                                &lt;!&ndash; See: https://github.com/moditect/moditect/issues/67 &ndash;&gt;
                                 <jvmVersion>9</jvmVersion>
                                 <overwriteExistingFiles>true</overwriteExistingFiles>
                                 <module>
-                                    <!-- VersionFinder requires java.xml -->
-                                    <!-- FileUtils requires jdk.unsupported (for usage of Unsafe) -->
-                                    <!-- ModulePathInfo requires java.management -->
-                                    <!-- LogNode requires java.logging -->
+                                    &lt;!&ndash; VersionFinder requires java.xml &ndash;&gt;
+                                    &lt;!&ndash; FileUtils requires jdk.unsupported (for usage of Unsafe) &ndash;&gt;
+                                    &lt;!&ndash; ModulePathInfo requires java.management &ndash;&gt;
+                                    &lt;!&ndash; LogNode requires java.logging &ndash;&gt;
                                     <moduleInfoSource>
                                         /** ${project.name}: ${project.description} ( ${project.url} ) */
                                         module
@@ -251,6 +256,7 @@
                         </execution>
                     </executions>
                 </plugin>
+-->
 
                 <!-- Add src/test/perf to test sources -->
                 <plugin>
